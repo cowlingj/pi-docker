@@ -1,0 +1,13 @@
+[Unit]
+Description=Run pi-docker docker compose file
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/pi-docker
+ExecStart=/usr/local/bin/docker-compose up
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

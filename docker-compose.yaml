@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  piknik:
+    container_name: piknik
+    build:
+      context: ./piknik
+      dockerfile: ./Dockerfile
+    ports:
+      - "8075:8075"
+    volumes:
+      - ./piknik/etc-piknik:/etc/piknik
+    restart: unless-stopped
+  nfs:
+    container_name: nfs
+    image: itsthenetwork/nfs-server-alpine:latest-arm
+    ports:
+      - "2049:2049"
+    environment:
+      SHARED_DIRECTORY: '/nfs'
+      PERMITTED: '192.168.*'
+    volumes:
+      - '${NFS_VOLUME_PATH}:/nfs'
+    cap_add:
+      - SYS_ADMIN
+      - SETPCAP
+    restart: unless-stopped
+  adguardhome:
+    container_name: adguardhome
+    image: adguard/adguardhome
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80"
+      - "443:443"
+      - "853:853"
+      - "3000:3000"
+    volumes:
+      - './adguardhome/opt-adguardhome-work:/opt/adguardhome/work'
+      - './adguardhome/opt-adguardhome-conf:/opt/adguardhome/conf'
+    restart: unless-stopped
+
