@@ -37,7 +37,7 @@ fi
 [ ! -f ~/bin ] && mkdir ~/bin
 
 echo "Installing docker rootless dependencies..."
-curl -o slirp4netns --fail -L https://github.com/rootless-containers/slirp4netns/releases/download/v1.1.10/slirp4netns-$(uname -m) && chmod +x slirp4netns && mv~/bin
+curl -o slirp4netns --fail -L https://github.com/rootless-containers/slirp4netns/releases/download/v1.1.10/slirp4netns-$(uname -m) && chmod +x slirp4netns && mv slirp4netns ~/bin
 
 echo "Installing docker"
 curl -fsSL https://get.docker.com/rootless | sh
